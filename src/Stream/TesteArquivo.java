@@ -11,7 +11,9 @@ public class TesteArquivo {
         try {
             Psiquiatra[] lista = {
                     new Psiquiatra("Dra. Ana", "12345", "1000", true, 60),
-                    new Psiquiatra("Dr. Pedro", "67890", "8888888", false, 45)
+                    new Psiquiatra("Dr. Pedro", "67890", "8888888", false, 45),
+                    new Psiquiatra("Dr. Livia", "424244", "dra@gmail.com", false, 45)
+
             };
 
             int[] bytes = new int[lista.length];
