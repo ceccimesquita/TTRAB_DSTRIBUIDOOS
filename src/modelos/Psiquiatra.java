@@ -1,6 +1,10 @@
 package modelos;
 
-public class Psiquiatra extends Medico {
+import java.io.Serializable;
+
+public class Psiquiatra extends Medico implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private boolean atendeOnline;
     private int duracaoConsultaMin;
 
