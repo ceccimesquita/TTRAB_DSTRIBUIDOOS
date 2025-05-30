@@ -33,9 +33,13 @@ public class PsiquiatraOutputStream extends OutputStream {
             Psiquiatra p = psiquiatras[i];
 
             // Pegando os 3 atributos mínimos para o cálculo de bytes
+            // CERTO – usa todos os 5 atributos!
             String dados = "Nome: " + p.getNome()
                     + ", CRM: " + p.getCrm()
-                    + ", Contato: " + p.getContato();
+                    + ", Contato: " + p.getContato()
+                    + ", Atende Online: " + (p.isAtendeOnline() ? "Sim" : "Não")
+                    + ", Duração da Consulta: " + p.getDuracaoConsultaMin() + " min";
+
 
             // Convertendo para bytes
             byte[] dadosBytes = dados.getBytes(StandardCharsets.UTF_8);

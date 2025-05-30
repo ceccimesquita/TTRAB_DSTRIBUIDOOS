@@ -1,10 +1,12 @@
 package Stream;
 
 import modelos.Psiquiatra;
-import java.nio.charset.StandardCharsets;
-import java.io.IOException;
 
-public class TesteSystemOut {
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+public class TesteArquivo {
     public static void main(String[] args) {
         try {
             Psiquiatra[] lista = {
@@ -14,13 +16,17 @@ public class TesteSystemOut {
 
             int[] bytes = new int[lista.length];
             for (int i = 0; i < lista.length; i++) {
-                String base = lista[i].getNome() + lista[i].getCrm() + lista[i].getContato() + lista[i].isAtendeOnline() + lista[i].getDuracaoConsultaMin();
+                String base = lista[i].getNome() + lista[i].getCrm() + lista[i].getContato()
+                        + lista[i].isAtendeOnline() + lista[i].getDuracaoConsultaMin();
                 bytes[i] = base.getBytes(StandardCharsets.UTF_8).length;
             }
 
-            PsiquiatraOutputStream stream = new PsiquiatraOutputStream(lista, lista.length, bytes, System.out);
+            FileOutputStream fos = new FileOutputStream("psiquiatras.txt");
+            PsiquiatraOutputStream stream = new PsiquiatraOutputStream(lista, lista.length, bytes, fos);
             stream.enviarDados();
+            fos.close();
 
+            System.out.println("✅ Dados salvos em psiquiatras.txt com sucesso!");
         } catch (IOException e) {
             e.printStackTrace();
         }
