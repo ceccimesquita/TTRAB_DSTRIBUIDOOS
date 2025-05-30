@@ -1,4 +1,6 @@
-package modelos;
+package Interfaces;
+
+import modelos.Medico;
 
 import java.util.List;
 
