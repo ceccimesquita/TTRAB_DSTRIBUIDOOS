@@ -1,4 +1,4 @@
-package Stream.TCP;
+package Stream;
 
 import java.io.InputStream;
 import java.net.ServerSocket;
@@ -10,7 +10,7 @@ public class ServidorTCP {
             System.out.println("Servidor esperando conexão na porta 5000...");
 
             Socket cliente = servidor.accept();
-            System.out.println("✅ Cliente conectado!");
+            System.out.println("Cliente conectado!");
 
             InputStream in = cliente.getInputStream();
             int byteRecebido;

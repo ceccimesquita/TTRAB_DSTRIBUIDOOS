@@ -33,8 +33,12 @@ public class Psiquiatra extends Medico implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString()
-                + ", Atende Online: " + (atendeOnline ? "Sim" : "Não")
-                + ", Duração da Consulta: " + duracaoConsultaMin + " min";
+        return "Psiquiatra {" +
+                "Nome: '" + getNome() + '\'' +
+                ", CRM: '" + getCrm() + '\'' +
+                ", Contato: '" + getContato() + '\'' +
+                ", Atende Online: " + (atendeOnline ? "Sim" : "Não") +
+                ", Duração da Consulta: " + duracaoConsultaMin + " min" +
+                '}';
     }
 }

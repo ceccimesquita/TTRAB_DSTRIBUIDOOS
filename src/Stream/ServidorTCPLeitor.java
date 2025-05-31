@@ -1,6 +1,4 @@
-package Stream.TCP;
-
-import Stream.PsiquiatraInputStream;
+package Stream;
 
 import java.io.InputStream;
 import java.net.ServerSocket;
@@ -12,7 +10,7 @@ public class ServidorTCPLeitor {
             System.out.println("Servidor esperando na porta 5001...");
 
             Socket socket = server.accept();
-            System.out.println("✅ Cliente conectado!");
+            System.out.println("Cliente conectado!");
 
             InputStream in = socket.getInputStream();
             PsiquiatraInputStream pis = new PsiquiatraInputStream(in);

@@ -28,7 +28,7 @@ public class TesteArquivo {
             stream.enviarDados();
             fos.close();
 
-            System.out.println("✅ Dados salvos em psiquiatras.txt com sucesso!");
+            System.out.println("Dados salvos em psiquiatras.txt com sucesso!");
         } catch (IOException e) {
             e.printStackTrace();
         }

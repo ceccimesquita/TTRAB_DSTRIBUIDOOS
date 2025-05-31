@@ -1,7 +1,6 @@
-package Stream.TCP;
+package Stream;
 
 import modelos.Psiquiatra;
-import Stream.PsiquiatraOutputStream;
 
 import java.io.OutputStream;
 import java.net.Socket;
@@ -29,7 +28,7 @@ public class ClienteTCP {
             PsiquiatraOutputStream stream = new PsiquiatraOutputStream(lista, lista.length, bytes, out);
             stream.enviarDados();
 
-            System.out.println("✅ Dados enviados ao servidor via socket TCP.");
+            System.out.println("Dados enviados ao servidor via socket TCP.");
         } catch (Exception e) {
             e.printStackTrace();
         }
