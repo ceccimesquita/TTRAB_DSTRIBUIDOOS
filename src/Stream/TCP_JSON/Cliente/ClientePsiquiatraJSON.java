@@ -1,5 +1,6 @@
 package Stream.TCP_JSON.Cliente;
 
+import Stream.TCP_JSON.Resposta;
 import com.google.gson.Gson;
 import modelos.Psiquiatra;
 
@@ -23,8 +24,12 @@ public class ClientePsiquiatraJSON {
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             writer.println(json);  // Enviar JSON
-            String resposta = reader.readLine();  // Ler resposta
-            System.out.println("Resposta do servidor: " + resposta);
+
+            String jsonResposta = reader.readLine();
+            Resposta resposta = gson.fromJson(jsonResposta, Resposta.class);
+            System.out.println(resposta.getStatus() + " - " + resposta.getMensagem());
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

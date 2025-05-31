@@ -1,3 +1,0 @@
-Nome: Dra. Ana, CRM: 12345, Contato: 1000, Atende Online: Sim, Duração da Consulta: 60 min [Bytes: 23]
-Nome: Dr. Pedro, CRM: 67890, Contato: 8888888, Atende Online: Não, Duração da Consulta: 45 min [Bytes: 28]
-Nome: Dr. Livia, CRM: 424244, Contato: dra@gmail.com, Atende Online: Não, Duração da Consulta: 45 min [Bytes: 35]

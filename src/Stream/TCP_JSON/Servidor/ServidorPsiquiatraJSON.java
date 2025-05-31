@@ -1,5 +1,6 @@
 package Stream.TCP_JSON.Servidor;
 
+import Stream.TCP_JSON.Resposta;
 import com.google.gson.Gson;
 import modelos.Psiquiatra;
 
@@ -23,7 +24,10 @@ public class ServidorPsiquiatraJSON {
             System.out.println("Psiquiatra recebido:");
             System.out.println(recebido);  // Usa toString()
 
-            writer.println("{\"status\": \"OK\", \"mensagem\": \"Psiquiatra recebido com sucesso!\"}");
+            Resposta resposta = new Resposta("OK", "Psiquiatra recebido com sucesso!");
+            String json_res = gson.toJson(resposta);
+            writer.println(json_res);
+
 
             cliente.close();
         } catch (IOException e) {

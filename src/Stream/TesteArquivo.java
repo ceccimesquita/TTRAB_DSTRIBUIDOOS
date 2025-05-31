@@ -12,6 +12,13 @@ public class TesteArquivo {
             Psiquiatra[] lista = {
                     new Psiquiatra("Dra. Ana", "12345", "1000", true, 60),
                     new Psiquiatra("Dr. Pedro", "67890", "8888888", false, 45),
+                    new Psiquiatra("Dr. Livia", "424244", "dra@gmail.com", false, 45),
+                    new Psiquiatra("Dr. Livia", "424244", "dra@gmail.com", false, 45),
+                    new Psiquiatra("Dr. Livia", "424244", "dra@gmail.com", false, 45),
+                    new Psiquiatra("Dra. Ana", "12345", "1000", true, 60),
+                    new Psiquiatra("Dr. Pedro", "67890", "8888888", false, 45),
+                    new Psiquiatra("Dr. Livia", "424244", "dra@gmail.com", false, 45),
+                    new Psiquiatra("Dr. Livia", "424244", "dra@gmail.com", false, 45),
                     new Psiquiatra("Dr. Livia", "424244", "dra@gmail.com", false, 45)
 
             };
@@ -23,7 +30,7 @@ public class TesteArquivo {
                 bytes[i] = base.getBytes(StandardCharsets.UTF_8).length;
             }
 
-            FileOutputStream fos = new FileOutputStream("psiquiatras.txt");
+            FileOutputStream fos = new FileOutputStream("psiquiatrasarquivo.txt");
             PsiquiatraOutputStream stream = new PsiquiatraOutputStream(lista, lista.length, bytes, fos);
             stream.enviarDados();
             fos.close();

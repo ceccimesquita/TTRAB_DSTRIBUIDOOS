@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 public class ClienteTCP {
     public static void main(String[] args) {
 
-        try (Socket socket = new Socket("localhost", 5000)) {
+        try (Socket socket = new Socket("localhost", 5001)) {
 
             OutputStream out = socket.getOutputStream();
 

@@ -7,7 +7,7 @@ import java.net.Socket;
 public class ServidorTCP {
     public static void main(String[] args) {
         try (ServerSocket servidor = new ServerSocket(5001)) {
-            System.out.println("Servidor esperando conexão na porta 5000...");
+            System.out.println("Servidor esperando conexão na porta 5001...");
 
             Socket cliente = servidor.accept();
             System.out.println("Cliente conectado!");

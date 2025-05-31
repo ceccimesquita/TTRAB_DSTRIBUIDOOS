@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class TesteInputStreamArquivo {
     public static void main(String[] args) {
-        try (FileInputStream fis = new FileInputStream("psiquiatras.txt")) {
+        try (FileInputStream fis = new FileInputStream("psiquiatrasarquivo.txt")) {
             PsiquiatraInputStream pis = new PsiquiatraInputStream(fis);
             pis.lerDados();
         } catch (IOException e) {
