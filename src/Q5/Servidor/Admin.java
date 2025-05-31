@@ -1,5 +1,8 @@
 package Q5.Servidor;
 
+import Q5.modelo.Mensagem;
+import com.google.gson.Gson;
+
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
@@ -18,19 +21,18 @@ public class Admin {
                 PrintWriter saida = new PrintWriter(socket.getOutputStream(), true);
                 Scanner sc = new Scanner(System.in)
         ) {
+            Gson gson = new Gson();
 
-            System.out.println(entrada.readLine());
-            saida.println("admin");
-            System.out.println(entrada.readLine());
-            saida.println("admin123");
+            // Login
+            saida.println(gson.toJson(new Mensagem("login", "admin")));
+            saida.println(gson.toJson(new Mensagem("senha", "admin123")));
 
-            String linha = entrada.readLine();
-            if (linha == null || !linha.contains("Bem-vindo")) {
-                System.out.println("Falha no login como administrador.");
+            Mensagem respostaLogin = gson.fromJson(entrada.readLine(), Mensagem.class);
+            if (!respostaLogin.getConteudo().contains("Bem-vindo")) {
+                System.out.println("❌ Falha no login como administrador.");
                 return;
             }
-            System.out.println(linha);
-
+            System.out.println(respostaLogin.getConteudo());
 
             while (true) {
                 System.out.println("\n=== Painel do Administrador ===");
@@ -38,6 +40,7 @@ public class Admin {
                 System.out.println("2. Adicionar candidato");
                 System.out.println("3. Remover candidato");
                 System.out.println("4. Ver resultado parcial");
+                System.out.println("5. Iniciar nova votação");
                 System.out.println("0. Sair");
                 System.out.print("Escolha: ");
                 String op = sc.nextLine();
@@ -47,24 +50,26 @@ public class Admin {
                     case "2" -> {
                         System.out.print("Nome do candidato: ");
                         String nome = sc.nextLine();
-                        saida.println("addCandidato:" + nome);
-                        System.out.println(entrada.readLine());
+                        saida.println(gson.toJson(new Mensagem("comando", "addCandidato:" + nome)));
+                        System.out.println(gson.fromJson(entrada.readLine(), Mensagem.class).getConteudo());
                     }
                     case "3" -> {
                         System.out.print("Nome do candidato a remover: ");
                         String nome = sc.nextLine();
-                        saida.println("removerCandidato:" + nome);
-                        System.out.println(entrada.readLine());
+                        saida.println(gson.toJson(new Mensagem("comando", "removerCandidato:" + nome)));
+                        System.out.println(gson.fromJson(entrada.readLine(), Mensagem.class).getConteudo());
                     }
                     case "4" -> {
-                        saida.println("resultadoParcial");
-                        String resposta;
-                        while (!(resposta = entrada.readLine()).equals("FIM")) {
-                            System.out.println(resposta);
-                        }
+                        saida.println(gson.toJson(new Mensagem("comando", "resultadoParcial")));
+                        Mensagem resposta = gson.fromJson(entrada.readLine(), Mensagem.class);
+                        System.out.println(resposta.getConteudo());
+                    }
+                    case "5" -> {
+                        saida.println(gson.toJson(new Mensagem("comando", "novaVotacao")));
+                        System.out.println(gson.fromJson(entrada.readLine(), Mensagem.class).getConteudo());
                     }
                     case "0" -> {
-                        saida.println("sair");
+                        saida.println(gson.toJson(new Mensagem("comando", "sair")));
                         System.out.println("Encerrando console administrativo.");
                         return;
                     }

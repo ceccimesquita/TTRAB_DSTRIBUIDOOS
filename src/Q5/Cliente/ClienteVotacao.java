@@ -1,5 +1,8 @@
 package Q5.Cliente;
 
+import Q5.modelo.Mensagem;
+import com.google.gson.Gson;
+
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
@@ -13,53 +16,56 @@ public class ClienteVotacao {
                 PrintWriter saida = new PrintWriter(socket.getOutputStream(), true);
                 Scanner teclado = new Scanner(System.in)
         ) {
+            Gson gson = new Gson();
 
             new Thread(new ClienteMulticast()).start();
 
             boolean loginSucesso = false;
             while (!loginSucesso) {
-                for (int i = 0; i < 2; i++) {
-                    String linha = entrada.readLine();
-                    System.out.print(linha + " ");
-                    String entradaUsuario = teclado.nextLine();
-                    saida.println(entradaUsuario);
-                }
+                // Enviar login
+                System.out.print("LOGIN: Usuário: ");
+                String usuario = teclado.nextLine();
+                saida.println(gson.toJson(new Mensagem("login", usuario)));
 
-                String resposta = entrada.readLine();
-                System.out.println(resposta);
+                System.out.print("Senha: ");
+                String senha = teclado.nextLine();
+                saida.println(gson.toJson(new Mensagem("senha", senha)));
 
-                if (resposta == null || resposta.toLowerCase().contains("falha")) {
+                Mensagem resposta = gson.fromJson(entrada.readLine(), Mensagem.class);
+                System.out.println(resposta.getConteudo());
+
+                if (resposta.getConteudo().toLowerCase().contains("falha")) {
                     System.out.println("Deseja tentar novamente? (s/n)");
                     if (teclado.nextLine().trim().equalsIgnoreCase("n")) return;
                 } else {
                     loginSucesso = true;
-                    if (resposta.toLowerCase().contains("já votou") || resposta.toLowerCase().contains("encerrada")) {
-                        // Leitura do restante, se houver
-                        String linha;
-                        while ((linha = entrada.readLine()) != null) {
-                            System.out.println(linha);
+                    if (resposta.getConteudo().toLowerCase().contains("já votou") ||
+                            resposta.getConteudo().toLowerCase().contains("encerrada")) {
+
+                        while (entrada.ready()) {
+                            Mensagem msg = gson.fromJson(entrada.readLine(), Mensagem.class);
+                            System.out.println(msg.getConteudo());
                         }
                         return;
                     }
                 }
             }
 
-            String linha;
-            while ((linha = entrada.readLine()) != null && !linha.contains("Digite o nome")) {
-                System.out.println(linha);
-            }
+            // Receber lista de candidatos
+            Mensagem listaMsg = gson.fromJson(entrada.readLine(), Mensagem.class);
+            System.out.println(listaMsg.getConteudo());
 
+            // Loop para votar
             while (true) {
                 System.out.print("> ");
                 String voto = teclado.nextLine();
-                saida.println(voto);
+                saida.println(gson.toJson(new Mensagem("voto", voto)));
 
-                String resposta = entrada.readLine();
-                System.out.println(resposta);
+                Mensagem resposta = gson.fromJson(entrada.readLine(), Mensagem.class);
+                System.out.println(resposta.getConteudo());
 
-                if (resposta != null && resposta.contains("✅")) {
-                    break;
-                } else if (resposta != null && resposta.contains("❌")) {
+                if (resposta.getConteudo().contains("Voto")) break;
+                if (resposta.getConteudo().contains("Candidato")) {
                     System.out.println("Deseja tentar votar novamente? (s/n)");
                     if (teclado.nextLine().trim().equalsIgnoreCase("n")) return;
                 } else {
@@ -81,8 +87,6 @@ class ClienteMulticast implements Runnable {
             InetAddress grupo = InetAddress.getByName("230.0.0.0");
             socket.joinGroup(grupo);
 
-            //System.out.println("Aguardando notas informativas do administrador...");
-
             while (true) {
                 byte[] buffer = new byte[256];
                 DatagramPacket pacote = new DatagramPacket(buffer, buffer.length);
@@ -95,4 +99,3 @@ class ClienteMulticast implements Runnable {
         }
     }
 }
-
